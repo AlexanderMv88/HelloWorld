@@ -15,13 +15,16 @@ class Task():
     description = ''
     # Поле users класса Task. Т.к. задача может быть видна сразу нескольким пользователям поэтому использую массив
     users = []
+    # Поле done класса Task
+    done = False;
 
     # Конструктор класса Task
-    def __init__(self, id, title, description, users):
+    def __init__(self, id, title, description, users, done):
         self.id = id
         self.title = title
         self.description = description
         self.users = users
+        self.done = done
 
     # Преобразую в json
     def toJSON(self):
@@ -35,7 +38,8 @@ class Task():
             'title': self.title,
             'description': self.description,
              # Подставляю массив json-ов как значение поля
-            'users': jsonUsers
+            'users': jsonUsers,
+            'done': self.done
         }
 
 
@@ -141,9 +145,9 @@ class S(BaseHTTPRequestHandler):
         # Список задач
         tasks = []
         # Добавляю в список задач новую задачу с первым пользователем из массива users
-        tasks.append(Task(1, 'Некий заголовок1', 'Тут описание1', [users[0]]))
-        tasks.append(Task(2, 'Некий заголовок2', 'Тут описание2', [users[1]]))
-        tasks.append(Task(3, 'Заголовок общей задачи', 'Описание общей задачи', users))
+        tasks.append(Task(1, 'Некий заголовок1', 'Тут описание1', [users[0]], False))
+        tasks.append(Task(2, 'Некий заголовок2', 'Тут описание2', [users[1]], True))
+        tasks.append(Task(3, 'Заголовок общей задачи', 'Описание общей задачи', users, False))
         return tasks
 
 
